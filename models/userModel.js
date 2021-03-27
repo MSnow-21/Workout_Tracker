@@ -11,9 +11,13 @@ const userSchema = new Schema({
         {
             type:{
                 type: String,
+                trim: true,
+                required: "Type is Required"
             },
             name:{
                 type: String,
+                trim: true,
+                required: "Name is Required"
             },
             duration: {
                 type: Number,
@@ -26,7 +30,10 @@ const userSchema = new Schema({
             },
             sets: {
                 type: Number,
-            },                    
+            }                    
     }]
 });
 
+const User = mongoose.model("User", UserSchema);
+
+model.exports = User;
