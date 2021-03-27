@@ -16,9 +16,17 @@ const userSchema = new Schema({
                 type: String,
             },
             duration: {
-                type:Number,
+                type: Number,
             },
-        
+            weight: {
+                type: Number,
+            },
+            reps: {
+                type: Number,
+            },
+            sets: {
+                type: Number,
+            },                    
     }]
 });
 
