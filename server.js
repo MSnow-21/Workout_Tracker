@@ -17,6 +17,8 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/exercisedb", { useNewUrlParser: true});
 
+// HTML Routes
+
 app.get("/", function (req,res) {
     res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -30,8 +32,31 @@ app.get("/stats", function(req,res){
 });
 
 
+//API Routes
 
+// Get request to find all workouts.
 
+app.get("/api/workouts", (req,res) => {
+    db.User.find({})
+      .then(dbUser => {
+          res.json(dbUser);
+      })
+      .catch(err => {
+          res.json(err);
+      });
+})
+
+// Post route to add another workout.
+
+app.post("/api/workouts", ({body},res) =>{
+    db.User.create(body)
+        .then(dbUser => {
+            res.json(dbUser);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
 
 
 
