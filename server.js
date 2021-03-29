@@ -39,7 +39,7 @@ app.get("/stats", function(req,res){
 app.get("/api/workouts", (req,res) => {
     db.Workout.find({})
       .then(dbWorkout => {
-          res.json(dbWorkout);nod
+          res.json(dbWorkout);
       })
       .catch(err => {
           res.json(err);
