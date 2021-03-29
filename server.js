@@ -1,5 +1,5 @@
 const express = require("express");
-const logger = require("logger");
+const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
@@ -15,31 +15,31 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/exercisedb", { useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true});
 
 // HTML Routes
 
 app.get("/", function (req,res) {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.get("/exercise", function(req,res){
-    res.sendFile(path.join(__dirname,"exercise.html"));
+    res.sendFile(path.join(__dirname, "./public/exercise.html"));
 });
 
 app.get("/stats", function(req,res){
-    res.sendFile(path.join(__dirname, "stats.html"));
+    res.sendFile(path.join(__dirname, "./public/stats.html"));
 });
 
 
 //API Routes
 
-// Get request to find all workouts.
+//Get request to find all workouts.
 
 app.get("/api/workouts", (req,res) => {
-    db.User.find({})
-      .then(dbUser => {
-          res.json(dbUser);
+    db.Workout.find({})
+      .then(dbWorkout => {
+          res.json(dbWorkout);nod
       })
       .catch(err => {
           res.json(err);
@@ -49,9 +49,9 @@ app.get("/api/workouts", (req,res) => {
 // Post route to add another workout.
 
 app.post("/api/workouts", ({body},res) =>{
-    db.User.create(body)
-        .then(dbUser => {
-            res.json(dbUser);
+    db.Workout.create(body)
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
