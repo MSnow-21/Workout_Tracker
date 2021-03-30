@@ -47,7 +47,19 @@ app.get("/api/workouts", (req,res) => {
       });
 })
 
-// Post route to add another workout.
+//Get request to find range with limit of 7 days - ref api.js line 38
+
+app.get("/api/workouts/range", (req,res)=>{
+    db.Workout.find({}).limit(7)
+      .then(dbWorkout => {
+          res.json(dbWorkout);
+      })
+      .catch(err => {
+          res.json(err);
+      })
+})
+
+// Post route to create a workout - ref api.js line 26
 
 app.post("/api/workouts", ({body},res) =>{
     db.Workout.create(body)
