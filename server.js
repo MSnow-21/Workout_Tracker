@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 3000;
 
 const db = require('./models');
 
+console.log(db.Workout);
+
 const app = express();
 
 app.use(logger("dev"));
@@ -71,7 +73,18 @@ app.post("/api/workouts", ({body},res) =>{
         });
 });
 
-
+app.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findOneAndUpdate({_id:req.params.id},{$push: {exercises:req.body}})
+    // db.Workout.create(req.body)
+    //     .then(({_id}) => db.Workout.findOneandUpdate({req.params.id}, {$push: {workout:_id}},{new: true}))
+        .then(dbWorkout => {
+            console.log(req.body);
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+})
 
 
 
