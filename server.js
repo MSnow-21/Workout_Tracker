@@ -57,14 +57,33 @@ app.get("/api/workouts", (req,res) => {
 //Get request to find range with limit of 7 days - ref api.js line 38
 
 app.get("/api/workouts/range", (req,res)=>{
-    db.Workout.find({}).limit(7)
-      .then(dbWorkout => {
-          res.json(dbWorkout);
-      })
-      .catch(err => {
-          res.json(err);
-      })
+    db.Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration: {$sum: "$exercises.duration"},
+            }
+        }
+    ]).limit(7).sort({_id:-1})
+    .then(dbWorkout=> {
+        res.json(dbWorkout);
+    })
+    .catch(err=> {
+        res.json(err);
+    })
+
+
+
+    //initial code
+    // db.Workout.find({}).limit(7)
+    //   .then(dbWorkout => {
+    //       res.json(dbWorkout);
+    //   })
+    //   .catch(err => {
+    //       res.json(err);
+    //   })
 })
+
+
 
 // Post route to create a workout - ref api.js line 26
 
