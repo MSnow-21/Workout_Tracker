@@ -71,16 +71,6 @@ app.get("/api/workouts/range", (req,res)=>{
         res.json(err);
     })
 
-
-
-    //initial code
-    // db.Workout.find({}).limit(7)
-    //   .then(dbWorkout => {
-    //       res.json(dbWorkout);
-    //   })
-    //   .catch(err => {
-    //       res.json(err);
-    //   })
 })
 
 
@@ -99,8 +89,6 @@ app.post("/api/workouts", ({body},res) =>{
 
 app.put("/api/workouts/:id", (req, res) => {
     db.Workout.findOneAndUpdate({_id:req.params.id},{$push: {exercises:req.body}})
-    // db.Workout.create(req.body)
-    //     .then(({_id}) => db.Workout.findOneandUpdate({req.params.id}, {$push: {workout:_id}},{new: true}))
         .then(dbWorkout => {
             console.log(req.body);
             res.json(dbWorkout);
